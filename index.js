@@ -31,10 +31,10 @@ app.use(authenticate)
 
 app.use('/todos', todoController);
 
-app.listen(process.env.port, async () => {
+app.listen(process.env.PORT, async () => {
     try {
         await connection;
-        console.log(`Listening on Port ${process.env.port}`);
+        console.log(`Listening on Port ${process.env.PORT}`);
     }
     catch (err) {
         console.log(err.message);

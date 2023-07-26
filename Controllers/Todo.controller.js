@@ -6,7 +6,6 @@ todoController.get('/', async (req, res) => {
     try {
         const todo = await TodoModel.find({ authorID: req.body.authorID });
         res.status(200).send(todo);
-        console.log("Todos found");
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
