@@ -13,8 +13,8 @@ todoController.get('/', async (req, res) => {
 
 todoController.post('/addTodo', async (req, res) => {
     try {
-        const todo = await new TodoModel.create(req.body);
-        // await todo.save();
+        const todo = await new TodoModel(req.body);
+        todo.save();
         res.send({ "msg": "todo has been saved" })
 
     } catch (error) {
