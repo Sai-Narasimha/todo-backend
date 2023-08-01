@@ -54,4 +54,14 @@ todoController.delete('/delete/:id', async (req, res) => {
     }
 })
 
+todoController.get('/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const todo = await TodoModel.findOne({ _id: id })
+        res.status(200).send(todo);
+    } catch (error) {
+        res.send({ error: error.message });
+    }
+})
+
 module.exports = { todoController } 
