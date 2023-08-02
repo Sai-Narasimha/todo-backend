@@ -4,15 +4,15 @@ const userController = express.Router();
 
 const { UserModel } = require('../Models/User.model');
 
-const validation = require('../Middlewares/validation.middleware');
 
-const userValidationSchema = require('../Validations/UserValidation/user.validation')
 
 const jwt = require('jsonwebtoken');
 
 const bcrypt = require('bcrypt');
 
 const dotenv = require('dotenv');
+const userValidation = require('../Validations/UserValidation/user.validation');
+const validation = require('../Middlewares/validation.middleware');
 
 dotenv.config()
 
@@ -34,7 +34,7 @@ dotenv.config()
 //     }
 // });
 
-userController.post('/register', validation(userValidationSchema),async (req, res) => {
+userController.post('/register',c , async (req, res) => {
     const { username, email, password, age } = req.body;
     try {
         const hash = await bcrypt.hash(password, 5);
@@ -46,12 +46,13 @@ userController.post('/register', validation(userValidationSchema),async (req, re
     }
 });
 
-userController.post('/login', async (req, res) => {
+userController.post('/login',validation(userValidation.userLoginValidationSchema), async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await UserModel.findOne({ email });
+
         if (user) {
-            console.log(user);
+            
             bcrypt.compare(password, user.password, async (err, result) => {
                 if (result) {
                     const token = jwt.sign({ author_id: user._id, author: user.username }, process.env.JWT_SECRET);  //passing the payload for realiting the todos of the particular user

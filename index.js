@@ -12,6 +12,10 @@ const { authenticate } = require('./Middlewares/auth.middleware')
 
 const { userController } = require('./Controllers/User.controller')
 
+const validation = require('./Middlewares/validation.middleware');
+
+const userValidationSchema = require('./Validations/UserValidation/user.validation')
+
 const app = express()
 
 app.use(express.json())

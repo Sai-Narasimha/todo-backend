@@ -1,13 +1,31 @@
 const yup = require('yup')
 
-const userValidationSchema = yup.object({
-    username: yup.string().required(),
-    email: yup.string().email().required(),
-    password: yup.string().matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,10}$/,
-        'Password must be between 4 and 10 characters, and contain at least one letter and one number'
-    ).required(),
-    age:yup.number().required()
-});
+const userValidation={
 
-module.exports = userValidationSchema;
+    userRegisterValidationSchema : yup.object({
+
+       username: yup.string().required(),
+
+       email: yup.string().email().required(),
+
+       password: yup.string().matches(
+           /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+           'Password must be, At least one upper case, At least lower case,At least one digit, At least one special character and Minimum 8 in length'
+       ).required(),
+
+       age:yup.number().required()
+   }),
+
+   userLoginValidationSchema:yup.object({
+
+    email: yup.string().email().required(),
+
+    password: yup.string().matches(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+        'Password must be, At least one upper case, At least lower case,At least one digit, At least one special character and Minimum 8 in length'
+    ).required(),
+    
+}),
+}
+
+module.exports = userValidation;
