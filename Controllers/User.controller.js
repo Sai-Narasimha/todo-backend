@@ -1,29 +1,50 @@
 const express = require('express');
+
 const userController = express.Router();
+
 const { UserModel } = require('../Models/User.model');
+
+const validation = require('../Middlewares/validation.middleware');
+
+const userValidationSchema = require('../Validations/UserValidation/user.validation')
+
 const jwt = require('jsonwebtoken');
+
 const bcrypt = require('bcrypt');
+
 const dotenv = require('dotenv');
+
 dotenv.config()
 
-userController.post('/register', async (req, res) => {
+// userController.post('/register',validation(userValidationSchema), async (req, res) => {
+//     const { username, email, password, age } = req.body;
+//     try {
+//         bcrypt.hash(password, 5, async (err, hash) => {
+//             if (err) {
+//                 res.status(200).send({ "error": err.message })
+//             }
+//             else {
+//                 const user = new UserModel({ username, email, password: hash, age });
+//                 await user.save();
+//                 res.status(200).send({ "msg": "User was successfully registered" });
+//             }
+//         });
+//     } catch (error) {
+//         res.status(400).send({ error: error.message });
+//     }
+// });
+
+userController.post('/register', validation(userValidationSchema),async (req, res) => {
     const { username, email, password, age } = req.body;
     try {
-        bcrypt.hash(password, 5, async (err, hash) => {
-            if (err) {
-                res.status(200).send({ "error": err.message })
-            }
-            else {
-                const user = new UserModel({ username, email, password: hash, age });
-                await user.save();
-                res.status(200).send({ "msg": "User was successfully registered" });
-            }
-        });
+        const hash = await bcrypt.hash(password, 5);
+        const user = new UserModel({ username, email, password: hash, age });
+        await user.save();
+        res.status(200).send({ "msg": "User was successfully registered" });
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        res.status(500).send({ error: "An error occurred while registering the user." });
     }
 });
-
 
 userController.post('/login', async (req, res) => {
     const { email, password } = req.body;

@@ -11,20 +11,21 @@ const authenticate = (req, res, next) => {
                 req.body.authorID = decoded.author_id
                 req.body.authorName = decoded.author
                 next();
+                return next();
             }
             else {
-                res.status(401).send({
+                return res.status(401).send({
                     message: 'please login'
                 })
             }
         }
         else {
-            res.status(401).send({
+            return res.status(401).send({
                 message: 'please login'
             })
         }
     } catch (error) {
-        res.send({ error: error.message })
+        return res.send({ error: error.message })
     }
 
 }
