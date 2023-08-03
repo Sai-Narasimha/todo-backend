@@ -6,7 +6,7 @@ const userValidation={
 
        username: yup.string().required(),
 
-       email: yup.string().email().required(),
+       email: yup.string().email().matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,"email must be a valid email").required(),
 
        password: yup.string().matches(
            /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
@@ -18,7 +18,7 @@ const userValidation={
 
    userLoginValidationSchema:yup.object({
 
-    email: yup.string().email().matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).required(),
+    email: yup.string().email().matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,"email must be a valid email").required(),
 
     password: yup.string().matches(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
