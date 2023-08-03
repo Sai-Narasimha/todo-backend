@@ -4,14 +4,14 @@ const userController = express.Router();
 
 const { UserModel } = require('../Models/User.model');
 
-
-
 const jwt = require('jsonwebtoken');
 
 const bcrypt = require('bcrypt');
 
 const dotenv = require('dotenv');
+
 const userValidation = require('../Validations/UserValidation/user.validation');
+
 const validation = require('../Middlewares/validation.middleware');
 
 dotenv.config()
