@@ -34,7 +34,7 @@ dotenv.config()
 //     }
 // });
 
-userController.post('/register',c , async (req, res) => {
+userController.post('/register',validation(userValidation.userRegisterValidationSchema), async (req, res) => {
     const { username, email, password, age } = req.body;
     try {
         const hash = await bcrypt.hash(password, 5);
