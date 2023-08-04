@@ -50,7 +50,6 @@ userController.post('/login',validation(userValidation.userLoginValidationSchema
     const { email, password } = req.body;
     try {
         const user = await UserModel.findOne({ email });
-
         if (user) {
             
             bcrypt.compare(password, user.password, async (err, result) => {
